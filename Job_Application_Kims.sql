@@ -65,3 +65,49 @@ AND   info.gender            LIKE DECODE(NVL(:p_gender,'all'),'all','%',:p_gende
 AND   info.cardno            LIKE DECODE(NVL(:p_cardno,'all'),'all','%',:p_cardno) 
 AND   info.active              LIKE DECODE(NVL(:p_active,'all'),'all','%',:p_active) 
 ORDER BY emp.start_date ASC
+
+
+----------------------------------------------
+
+
+SELECT info.cardno, info.enmname_bangla, info.father_name_ban,  info.spouse_name_ban,  info.mother_name_ban,
+               info.designation_bangla, info.dept_bangla, info.sec_bangla, info.present_add_ban, info.permanent_add_ban, 
+               other.own_cellno, info.joining_date, info.RELIGION, info.marital_status, other.totalchild, other.malechild, 
+               other.femalechild, info.birth_date, info.company,info.grosssalary, info.bloodgroup, pic.emppicture, info.workertype
+FROM  TB_PERSONAL_INFO info, TB_PERSONAL_INFO_OTHER other, TB_PERSONAL_INFO_PICTURE pic, TB_IDCARD_MULTIPLE mul
+WHERE info.company = :p_company
+AND   info.company     = other.company
+AND   info.company      = mul.company
+AND   info.company     = pic.company
+AND   info.cardno        = other.cardno
+AND   info.cardno        = pic.cardno
+AND   info.cardno         = mul.cardno
+ORDER BY info.departmentnm, info.sectionnm, info.lineno, info.cardno ASC
+
+
+----
+
+
+SELECT DISTINCT edu.highest_degree,info.company company_edu,info.cardno cardno_edu,
+               edu.level_degree, edu.institute_name, edu.passing_yr, edu.class_grade, edu.subject
+FROM  TB_PERSONAL_INFO info, TB_PERSONAL_EDUCATIONAL edu, TB_IDCARD_MULTIPLE mul
+WHERE info.company   =:p_company
+AND   info.company      = mul.company
+AND   info.company       = edu.company
+AND   mul.USER_NAME      = :p_user
+AND   info.cardno          = edu.cardno
+AND   info.cardno         = mul.cardno
+ORDER BY edu.passing_yr ASC
+
+---
+
+
+SELECT emp.companyname, emp.start_date ,  emp.end_date, emp.designation designation_exp,
+               info.company company_exp,info.cardno card_exp
+FROM  TB_PERSONAL_INFO info, TB_PERSONAL_EMPLOYMENT emp, TB_IDCARD_MULTIPLE mul
+WHERE info.company   =:p_company
+AND   info.company       = emp.company
+AND   info.company      = mul.company
+AND   info.cardno          = emp.cardno
+AND   info.cardno         = mul.cardno
+ORDER BY emp.start_date ASC
