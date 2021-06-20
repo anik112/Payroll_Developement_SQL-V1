@@ -23,3 +23,19 @@ ORDER BY info.departmentnm, info.sectionnm, info.lineno, info.cardno ASC
 
 
 SELECT * FROM dual WHERE dummy=:p_date
+
+-----------------
+
+
+
+SELECT  info.departmentnm, info.DEPT_BANGLA, info.sectionnm, info.SEC_BANGLA, info.lineno,info.cardno,  info.enmname_bangla, info.father_name_ban,  info.spouse_name_ban,  
+                info.mother_name_ban, info.joining_date, other.birth_certificate_no,  other.nid, other.special_mark, info.birth_date,
+                info.designation_bangla, info.salary_grade, info.grosssalary , info.present_add_ban, info.permanent_add_ban,info.company, info.workertype
+FROM  TB_PERSONAL_INFO info, TB_PERSONAL_INFO_OTHER other,  TB_IDCARD_MULTIPLE mul
+WHERE info.company = :p_company
+AND   info.company     = other.company
+AND   info.company      = mul.company
+AND   mul.USER_NAME      = :p_user
+AND   info.cardno        = other.cardno
+AND   info.cardno         = mul.cardno
+ORDER BY info.departmentnm, info.sectionnm, info.lineno, info.cardno ASC

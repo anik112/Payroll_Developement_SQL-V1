@@ -16,3 +16,18 @@ AND   info.gender            LIKE DECODE(NVL(:p_gender,'all'),'all','%',:p_gende
 AND   info.cardno            LIKE DECODE(NVL(:p_cardno,'all'),'all','%',:p_cardno) 
 AND   info.active              LIKE DECODE(NVL(:p_active,'all'),'all','%',:p_active) 
 ORDER BY info.departmentnm, info.sectionnm, info.lineno, info.cardno ASC
+
+
+--------------
+
+
+SELECT info.lineno, info.sectionnm, info.departmentnm,info.cardno,info.enmname_bangla, info.designation_bangla, info.joining_date,
+               info.birth_date, info.present_add_ban,info.permanent_add_ban,info.grosssalary  
+FROM  TB_PERSONAL_INFO info, TB_PERSONAL_INFO_OTHER other, TB_IDCARD_MULTIPLE mul
+WHERE info.company = :p_company
+AND   info.company = other.company
+AND   info.company      = mul.company
+AND   mul.USER_NAME      = :p_user
+AND   info.cardno  = other.cardno
+AND   info.cardno         = mul.cardno
+ORDER BY info.departmentnm, info.sectionnm, info.lineno, info.cardno ASC
