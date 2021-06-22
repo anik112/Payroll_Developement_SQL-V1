@@ -115,3 +115,19 @@ BEGIN
 EXCEPTION
 	WHEN OTHERS THEN NULL;
 END;
+
+
+--------------------------
+
+
+SELECT info.lineno, info.sectionnm, info.SEC_BANGLA, info.departmentnm, info.DEPT_BANGLA,info.cardno,info.enmname_bangla, 
+               info.designation_bangla, info.joining_date,info.birth_date, info.present_add_ban,info.permanent_add_ban,info.grosssalary,
+               info.SALARY_GRADE, info.workertype
+FROM  TB_PERSONAL_INFO info, TB_PERSONAL_INFO_OTHER other, TB_IDCARD_MULTIPLE mul
+WHERE info.company = :p_company
+AND   info.company = other.company
+AND   info.company      = mul.company
+AND   mul.USER_NAME      = :p_user
+AND   info.cardno  = other.cardno
+AND   info.cardno         = mul.cardno
+ORDER BY info.departmentnm, info.sectionnm, info.lineno, info.cardno ASC
