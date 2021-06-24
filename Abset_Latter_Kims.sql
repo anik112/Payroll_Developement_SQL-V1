@@ -63,3 +63,59 @@ AND    mul.user_name = :p_user
 AND    ABS.cardno     = per.cardno
 AND    ABS.cardno     = mul.cardno
 ORDER BY per.departmentnm, per.sectionnm,per.lineno,per.cardno ASC
+
+
+
+
+SELECT per.cardno,per.empname, per.departmentnm, per.sectionnm,per.lineno, per.designation, 
+               ABS.last_pesnt_date, ABS.start_absnt_date, ABS.fst_letter, ABS.snd_letter, ABS.trd_letter, ABS.resign_date ,
+               ABS.finyear , per.present_address, per.permanentaddress ,per.joining_date,
+               per.father_name, per.mother_name,  per.housbandname,  per.present_add_ban,  per.permanent_add_ban,
+               per.enmname_bangla,  per.designation_bangla,  per.dept_bangla,  per.sec_bangla
+FROM   TB_EMP_ABSENT_LETTER ABS,TB_PERSONAL_INFO per, TB_IDCARD_MULTIPLE mul
+WHERE per.company = :p_company  
+AND    per.company    = ABS.company
+AND    per.company    = mul.company
+AND    ABS.finyear      = :p_year
+AND    ABS.finmonth   = :p_month
+AND    ABS.fst_letter IS NOT NULL
+AND    mul.user_name = :p_user
+AND    ABS.cardno     = per.cardno
+AND    ABS.cardno     = mul.cardno
+ORDER BY per.departmentnm, per.sectionnm,per.lineno,per.cardno ASC
+
+
+-----------------
+
+
+SELECT per.cardno,per.empname, per.departmentnm, per.sectionnm,per.lineno, per.designation, 
+       ABS.last_pesnt_date, ABS.start_absnt_date, ABS.fst_letter, ABS.snd_letter, ABS.trd_letter, ABS.resign_date ,
+       ABS.finyear , per.present_address, per.permanentaddress ,per.joining_date, per.FATHER_NAME_BAN, per.SPOUSE_NAME_BAN,
+       per.father_name, per.mother_name,  per.housbandname,  per.present_add_ban,  per.permanent_add_ban,
+       per.enmname_bangla,  per.designation_bangla,  per.dept_bangla,  per.sec_bangla
+FROM   TB_EMP_ABSENT_LETTER ABS,TB_PERSONAL_INFO per, TB_IDCARD_MULTIPLE mul
+WHERE per.company = :p_company  
+AND    per.company    = ABS.company
+AND    per.company    = mul.company
+AND    ABS.finyear      = :p_year
+AND    ABS.finmonth   = :p_month
+AND    mul.user_name = :p_user
+AND    ABS.cardno     = per.cardno
+AND    ABS.cardno     = mul.cardno
+ORDER BY per.departmentnm, per.sectionnm,per.lineno,per.cardno ASC
+
+
+
+
+SELECT per.cardno, per.empname, per.departmentnm, per.sectionnm, per.lineno, per.designation, 
+               ABS.last_pesnt_date, ABS.start_absnt_date, ABS.fst_letter, ABS.snd_letter, ABS.trd_letter, ABS.resign_date , ABS.emp_letter_dt, ABS.remarks
+FROM   TB_EMP_ABSENT_LETTER ABS,TB_PERSONAL_INFO per, TB_IDCARD_MULTIPLE mul
+WHERE per.company   = :p_company  
+AND    per.company      = ABS.company
+AND    per.company    = mul.company
+AND    ABS.finyear        = :p_year
+AND    ABS.finmonth     = :p_month
+AND    mul.user_name = :p_user
+AND    ABS.cardno       = per.cardno
+AND    ABS.cardno     = mul.cardno
+ORDER BY per.departmentnm,per.sectionnm,per.lineno,per.cardno ASC
