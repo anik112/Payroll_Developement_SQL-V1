@@ -6,3 +6,7 @@ WHERE  company = :p_company
 AND    sectionnm  LIKE DECODE(NVL(:p_section,'all'),'all','%',:p_section)
 AND    cardno       LIKE DECODE(NVL(:p_card,'all'),'all','%',:p_card)
 ORDER BY sectionnm,lineno,cardno ASC
+
+
+
+
