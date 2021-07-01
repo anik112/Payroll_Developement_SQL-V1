@@ -19,7 +19,7 @@ AND   info.active              LIKE DECODE(NVL(:p_active,'all'),'all','%',:p_act
 ORDER BY info.departmentnm, info.sectionnm, info.lineno, info.cardno ASC
 
 
-------------
+----------------
 
 
 SELECT info.departmentnm,info.sectionnm,info.lineno,info.cardno,info.enmname_bangla,info.designation_bangla,
@@ -33,3 +33,5 @@ AND   mul.USER_NAME      = :p_user
 AND   info.cardno        = other.cardno
 AND   info.cardno         = mul.cardno
 ORDER BY info.departmentnm, info.sectionnm, info.lineno, info.cardno ASC
+
+

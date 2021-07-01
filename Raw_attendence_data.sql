@@ -12,6 +12,7 @@ CURSOR cur_data IS (
 FROM TB_DATA_MOVEMENT WHERE pdate='16-June-2021'
 AND   cardno IN (SELECT cardno FROM TB_ROASTER_INFO WHERE rdate='16-June-2021' AND presentshift='C')
 );
+
 BEGIN
 DBMS_OUTPUT.ENABLE(1000000); 
 	 OPEN cur_data;
