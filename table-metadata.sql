@@ -7,3 +7,10 @@ WHERE table_name IN (SELECT TABLE_NAME FROM all_tables WHERE OWNER='PAYROLL')
 
 --
 --GRANT SELECT ON test.tb_personal_info  TO TEST
+
+
+
+SELECT * FROM all_tables tbl WHERE tbl.OWNER='PAYROLL' AND tbl.INITIAL_EXTENT>16999
+
+
+SELECT * FROM all_indexes tbl WHERE tbl.OWNER='PAYROLL' AND tbl.INITIAL_EXTENT>16999
