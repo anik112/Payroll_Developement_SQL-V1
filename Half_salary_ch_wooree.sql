@@ -112,6 +112,8 @@ AND    info.active              LIKE DECODE(NVL(:p_active,'all'),'all','%',:p_ac
 GROUP BY info.sectionnm
 ORDER BY info.sectionnm ASC
 
+
+
 -- summary all  
 SELECT info.sectionnm, SUM(bamt.grosssal_bk+bamt.grosssal_ch)grosssal, SUM(bamt.basicsal_bk+bamt.basicsal_ch)basicsal, 
               SUM(bamt.payable_bk+bamt.payable_ch)payable, SUM(bamt.stamp)stamp, SUM(bamt.payment_bk+bamt.payment_ch)payment, 
