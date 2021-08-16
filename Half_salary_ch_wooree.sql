@@ -141,3 +141,6 @@ AND    info.cardno             LIKE DECODE(NVL(:p_cardno,'all'),'all','%',:p_car
 AND    info.active              LIKE DECODE(NVL(:p_active,'all'),'all','%',:p_active)  
 GROUP BY info.sectionnm
 ORDER BY info.sectionnm ASC
+
+
+
