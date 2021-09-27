@@ -3,7 +3,7 @@ DECLARE
 
 v_showalert NUMBER := 0;
 
-v_company     VARCHAR2(255):= 'Data DSS';
+v_company     VARCHAR2(255):= 'Woo Ree Apparels Ltd.';
 v_worker_type VARCHAR2(85) := 'Worker';
 v_shift       VARCHAR2(10) := 'G';
 
@@ -37,7 +37,7 @@ BEGIN
 FOR cls IN ( 
 SELECT  info.company, info.cardno, info.empname, info.departmentnm, info.sectionnm, info.lineno, info.shift, info.workertype,
         load.secreteno, load.datadate, MIN(load.datatime) intime , MAX(load.datatime) outtime
-FROM tb_ddss_data_load load, tb_ddss_personal_info info
+FROM TB_DATA_LOAD load, TB_PERSONAL_INFO info
 WHERE load.secreteno = info.secreteno
 GROUP BY info.company, load.secreteno, info.cardno, load.datadate, info.empname, info.departmentnm, 
          info.sectionnm, info.lineno, info.shift, info.workertype
@@ -61,16 +61,16 @@ v_load_outtime:= cls.outtime;
 -- get duty schedule ------
 BEGIN
 SELECT 
-TO_CHAR(instarttime,'hh24:mi:ss'), 
-TO_CHAR(latestarttime,'hh24:mi:ss'), 
-TO_CHAR(lastintime,'hh24:mi:ss'), 
-TO_CHAR(exittime,'hh24:mi:ss')
+TO_CHAR(instarttime,'hh24miss'), 
+TO_CHAR(latestarttime,'hh24miss'), 
+TO_CHAR(lastintime,'hh24miss'), 
+TO_CHAR(exittime,'hh24miss')
 INTO   
 v_strt_intime, 
 v_late_time , 
 v_last_intime, 
 v_exit_time
-FROM tb_ddss_duty_schedule_setup
+FROM TB_DUTY_SCHEDULE_SETUP
 WHERE company        = LTRIM(RTRIM(v_company))
 AND   section_worker = LTRIM(RTRIM(v_worker_type))
 AND   shift          = v_shift;
@@ -87,11 +87,11 @@ END;
 IF (v_load_intime BETWEEN '051001' AND '235959') THEN
 
 	-- get late & early information 
-	IF v_load_intime > v_late_time THEN
+	IF (TO_DATE(v_load_intime,'hh24:mi:ss') > TO_DATE(v_late_time,'hh24:mi:ss')) AND (v_late_time IS NOT NULL) THEN
 	   v_late_in    := FLOOR(((TO_DATE(v_load_intime,'hh24:mi:ss')-TO_DATE(v_late_time,'hh24:mi:ss'))*24)*60);
 	   v_late_status:='Late';
 	   v_early_in   := 0;
-	ELSIF v_load_intime < v_late_time THEN
+	ELSIF TO_DATE(v_load_intime,'hh24:mi:ss') < TO_DATE(v_late_time,'hh24:mi:ss') AND (v_late_time IS NOT NULL) THEN
 	   v_early_in := FLOOR(((TO_DATE(v_late_time,'hh24:mi:ss')-TO_DATE(v_load_intime,'hh24:mi:ss'))*24)*60);
 	   v_early_status := 'Early';
 	   v_late_in  := 0;
@@ -99,12 +99,12 @@ IF (v_load_intime BETWEEN '051001' AND '235959') THEN
 	   v_late_status:='';
 	   v_early_in   := 0;
 	   v_early_status := '';
-	   v_late_in  := 0;
+	   v_late_in      := 0;
 	END IF;
 	
 	
 	-- get OT for G,A,B shift --
-	IF v_load_outtime > v_exit_time THEN
+	IF (TO_DATE(v_load_outtime,'hh24:mi:ss') > TO_DATE(v_exit_time,'hh24:mi:ss')) AND (v_exit_time IS NOT NULL) THEN
 	   
 	   v_ot := FLOOR(((TO_DATE(v_load_outtime,'hh24:mi:ss')-TO_DATE(v_exit_time,'hh24:mi:ss'))*24)*60);
 	   
